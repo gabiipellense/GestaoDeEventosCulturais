@@ -1,11 +1,10 @@
 package org.example;
 
 import java.sql.*;
-import java.util.Date;
 
 public class BancoEvento {
 
-    public static void adicionarEvento (Evento evento){
+    public static Evento adicionarEvento (Evento evento){
 
         try (Connection connection = ConexaoBanco.getConnections()){
 
@@ -28,6 +27,7 @@ public class BancoEvento {
 
             e.printStackTrace();
         }
+        return evento;
     }
 
     public static Evento buscarEventoPorNome (String nome) {

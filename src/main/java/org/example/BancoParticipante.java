@@ -3,11 +3,10 @@ package org.example;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class BancoParticipante {
 
-    public static void adicionarParticipante (Participante participante){
+    public static Participante adicionarParticipante (Participante participante){
 
         try (Connection connection = ConexaoBanco.getConnections()){
 
@@ -28,6 +27,7 @@ public class BancoParticipante {
             e.printStackTrace();
 
         }
+        return participante;
     }
 
     public static Participante buscarParticipantePorEmail (String email) {

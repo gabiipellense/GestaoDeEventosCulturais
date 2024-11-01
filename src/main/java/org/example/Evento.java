@@ -26,6 +26,9 @@ public class Evento {
         this.descricao = descricao;
     }
 
+    public Evento() {
+
+    }
 
 
     public int getId() {

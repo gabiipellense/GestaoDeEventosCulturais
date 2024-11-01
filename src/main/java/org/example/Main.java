@@ -1,10 +1,9 @@
 package org.example;
 
 import java.sql.SQLException;
-
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Scanner;
 public class Main {
+    public static final Scanner sc = new Scanner(System.in);
     public static void main(String[] args) throws SQLException {
 
         ConexaoBanco.getConnections();
@@ -14,5 +13,51 @@ public class Main {
 
     public static Evento adicionarEvento () {
 
+        System.out.println("Digite o nome do evento: ");
+        String nome = sc.next();
+
+        System.out.println("Digite o lococal do evento: ");
+        String local = sc.next();
+
+        System.out.println("Digite a data: ");
+        String data = sc.next();
+
+        System.out.println("Digite a descrição do evento: ");
+        String descricao = sc.next();
+
+        return BancoEvento.adicionarEvento(new Evento(nome,local,data,descricao));
+
     }
+
+    public static void apagarEvento () {
+
+    }
+
+    public static Participante adicionarParticipante () {
+
+        System.out.println("Digite o nome do participante do evento: ");
+        String nome = sc.next();
+
+        System.out.println("Digite o email do participante do evento: ");
+        String email = sc.next();
+
+        return BancoParticipante.adicionarParticipante(new Participante(nome, email));
+    }
+
+    public static Participante PesquisaParaBuscarParticipantePorEmail () {
+
+    }
+
+    public static void apagarParticipante () {
+
+    }
+    public static Inscricao inscricao () {
+
+
+    }
+
+    public static void apagarDescricao () {
+
+    }
+
 }
