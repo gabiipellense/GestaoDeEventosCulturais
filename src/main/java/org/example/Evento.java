@@ -70,4 +70,14 @@ public class Evento {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    @Override
+    public String toString() {
+        return "Evento\n" +
+                "Id = " + id +
+                "\nNome = " + nome +
+                "\nLocal = " + local  +
+                "\nData = " + data +
+                "\nDescricao =" + descricao ;
+    }
 }

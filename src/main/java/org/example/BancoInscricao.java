@@ -2,18 +2,27 @@ package org.example;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class BancoInscricao {
 
-    public static void inscreverParticipante (int eventoId, int participanteId) {
+    public static Inscricao inscreverParticipante (Inscricao inscricao) {
 
 
         try (Connection connection = ConexaoBanco.getConnections()){
 
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO tb_inscricoes (eventoId, participanteId ) VALUES ( ?, ? )");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO tb_inscricoes (eventoId, participanteId ) VALUES ( ?, ? )", Statement.RETURN_GENERATED_KEYS);
 
-            ps.setInt(1, eventoId);
-            ps.setInt(2, participanteId );
+            ps.setInt(1, inscricao.getEvento().getId());
+            ps.setInt(2, inscricao.getParticipante().getId() );
+
+            ps.execute();
+            ResultSet rs = ps.getGeneratedKeys();
+
+            if (rs.next()){
+                inscricao.setId(rs.getInt(1));
+            }
 
         }
         catch (Exception e ){
@@ -21,6 +30,8 @@ public class BancoInscricao {
             e.printStackTrace();
 
         }
+
+        return inscricao;
 
     }
 

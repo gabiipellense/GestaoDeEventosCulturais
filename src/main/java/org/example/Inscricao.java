@@ -6,6 +6,9 @@ public class Inscricao {
     private Evento evento ;
     private Participante participante ;
 
+    public Inscricao(int eventoId, int participanteId) {
+    }
+
     public int getId() {
         return id;
     }

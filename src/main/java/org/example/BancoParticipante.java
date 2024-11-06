@@ -3,6 +3,7 @@ package org.example;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class BancoParticipante {
 
@@ -10,7 +11,7 @@ public class BancoParticipante {
 
         try (Connection connection = ConexaoBanco.getConnections()){
 
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO tb_participantes (id, nome, email) VALUES (?, ?, ?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO tb_participantes (id, nome, email) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1, participante.getId());
             ps.setString(2, participante.getNome());
@@ -43,6 +44,7 @@ public class BancoParticipante {
 
             ps.setInt(1, id );
             ps.execute();
+
         }
         catch (Exception e ){
 
@@ -52,4 +54,19 @@ public class BancoParticipante {
 
     }
 
+    public static Participante fazerCadastro (Participante participante) {
+
+        try (Connection connection = ConexaoBanco.getConnections()){
+
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO tb_participantes (senha) VALUES (?) ");
+
+            ps.setString(1,participante.getSenha());
+        }
+        catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return participante;
+    }
 }

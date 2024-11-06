@@ -6,6 +6,19 @@ public class Participante {
     private String nome ;
     private String email ;
 
+    private String senha ;
+
+    public Participante(String senha) {
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public Participante(String nome, String email) {
     }
 
@@ -31,5 +44,15 @@ public class Participante {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Participante" +
+                "\nId = " + id +
+                "\nNome = " + nome  +
+                "\nEmail = " + email  +
+                "\nSenha = " + senha
+                ;
     }
 }
