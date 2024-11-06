@@ -6,21 +6,15 @@ public class Participante {
     private String nome ;
     private String email ;
 
-    private String senha ;
 
-    public Participante(String senha) {
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public Participante() {
     }
 
     public Participante(String nome, String email) {
+        this.nome = nome;
+        this.email = email;
     }
+
 
     public int getId() {
         return id;
@@ -51,8 +45,7 @@ public class Participante {
         return "Participante" +
                 "\nId = " + id +
                 "\nNome = " + nome  +
-                "\nEmail = " + email  +
-                "\nSenha = " + senha
+                "\nEmail = " + email
                 ;
     }
 }

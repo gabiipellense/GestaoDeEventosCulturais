@@ -7,9 +7,9 @@ import java.sql.Statement;
 
 public class BancoParticipante {
 
-    public static Participante adicionarParticipante (Participante participante){
+    public static Participante adicionarParticipante(Participante participante) {
 
-        try (Connection connection = ConexaoBanco.getConnections()){
+        try (Connection connection = ConexaoBanco.getConnections()) {
 
             PreparedStatement ps = connection.prepareStatement("INSERT INTO tb_participantes (id, nome, email) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
@@ -17,13 +17,13 @@ public class BancoParticipante {
             ps.setString(2, participante.getNome());
             ps.setString(3, participante.getEmail());
 
+            ps.execute();
             ResultSet rs = ps.getGeneratedKeys();
 
             if (rs.next()) {
                 participante.setId(rs.getInt(1));
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
 
@@ -31,42 +31,48 @@ public class BancoParticipante {
         return participante;
     }
 
-    public static Participante buscarParticipantePorEmail (String email) {
+    public static Participante buscarParticipantePorEmail(String email) {
 
+        try (Connection connection = ConexaoBanco.getConnections()) {
+
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM tb_participantes WHERE email = ?");
+
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                String nome = rs.getString("nome");
+                String emailProcurado = rs.getString("email");
+                return new Participante(nome, emailProcurado);
+
+            }
+
+        }
+        catch (Exception e ) {
+
+            e.printStackTrace();
+
+        }
         throw new RuntimeException("O email " + email + " não existe em nosso Banco de Dados.");
     }
 
-    public static void removerParticipante (int id) {
+    public static void removerParticipante(int id) {
 
-        try (Connection connection = ConexaoBanco.getConnections()){
+        try (Connection connection = ConexaoBanco.getConnections()) {
 
             PreparedStatement ps = connection.prepareStatement("DELETE FROM tb_participantes WHERE id = ?");
 
-            ps.setInt(1, id );
+            ps.setInt(1, id);
             ps.execute();
 
-        }
-        catch (Exception e ){
+        } catch (Exception e) {
 
             e.printStackTrace();
 
         }
 
-    }
-
-    public static Participante fazerCadastro (Participante participante) {
-
-        try (Connection connection = ConexaoBanco.getConnections()){
-
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO tb_participantes (senha) VALUES (?) ");
-
-            ps.setString(1,participante.getSenha());
-        }
-        catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-        return participante;
     }
 }
+

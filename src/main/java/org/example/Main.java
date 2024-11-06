@@ -9,6 +9,7 @@ public class Main {
     public static final Scanner sc = new Scanner(System.in);
     public static void main(String[] args) throws SQLException {
 
+
         int resposta1 ;
         int resposta;
 
@@ -120,14 +121,10 @@ public class Main {
 
     }
 
-    public static Participante cadastrar () {
+    public static void cadastrar () {
 
         System.out.println("CADASTRO");
         adicionarParticipante();
-        System.out.println("Crie uma senha: ");
-        String senha = sc.next();
-
-        return BancoParticipante.fazerCadastro(new Participante(senha));
 
     }
 
@@ -137,9 +134,6 @@ public class Main {
 
         System.out.println("Digite o seu id de cadastro ");
         int id = sc.nextInt();
-
-        System.out.println("Digite a sua senha: ");
-        String senha = sc.next();
 
     }
 
@@ -167,6 +161,7 @@ public class Main {
         System.out.println("Insira o número id do evento que você deseja deletar: ");
         int id = sc.nextInt();
         BancoEvento.removerEvento(id);
+        System.out.println("Evento " + id + " Removido com Sucesso!");
 
     }
 
@@ -209,19 +204,26 @@ public class Main {
         System.out.println("Digite o id do participante que você deseja deletar: ");
         int id = sc.nextInt();
         BancoParticipante.removerParticipante(id);
+        System.out.println("Participante " + id + " Removido com Sucesso!");
 
     }
     public static Inscricao inscricao () {
 
         BancoEvento.buscarTodosOsEventos();
 
-        System.out.println("Digite o id do Evento que você deseja se inscrever: ");
-        int eventoId = sc.nextInt();
+        System.out.println("Digite o nome do Evento que você deseja inscrever: ");
+        String nome = sc.next();
 
-        int participanteId = adicionarParticipante().getId();
+        Evento evento = BancoEvento.buscarEventoPorNome(nome);
 
 
-        return BancoInscricao.inscreverParticipante(new Inscricao(eventoId, participanteId));
+        System.out.println("Digite o email do participante que você deseja inscrever");
+        String email = sc.next();
+
+        Participante participante = BancoParticipante.buscarParticipantePorEmail(email);
+
+
+        return BancoInscricao.inscreverParticipante(new Inscricao(evento, participante));
 
     }
 
@@ -232,6 +234,7 @@ public class Main {
 
         BancoInscricao.removerInscricao(id);
 
+        System.out.println("Inscrição " + id + " Removida com Sucesso!");
     }
 
 }
