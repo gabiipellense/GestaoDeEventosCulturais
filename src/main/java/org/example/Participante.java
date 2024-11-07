@@ -42,10 +42,12 @@ public class Participante {
 
     @Override
     public String toString() {
-        return "Participante" +
+        return "\n------------------" +
+                "\nParticipante" +
                 "\nId = " + id +
                 "\nNome = " + nome  +
-                "\nEmail = " + email
+                "\nEmail = " + email +
+                "\n------------------"
                 ;
     }
 }

@@ -32,4 +32,15 @@ public class Inscricao {
     public void setParticipante(Participante participante) {
         this.participante = participante;
     }
+
+    @Override
+    public String toString() {
+        return "\n------------------"+
+                "\nInscricao" +
+                "\nId = " + id +
+                "\nEvento = " + evento +
+                "\nParticipante = " + participante +
+                "\n------------------"
+                ;
+    }
 }

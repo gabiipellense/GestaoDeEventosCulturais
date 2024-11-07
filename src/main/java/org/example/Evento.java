@@ -73,11 +73,14 @@ public class Evento {
 
     @Override
     public String toString() {
-        return "Evento\n" +
-                "Id = " + id +
+        return "\n------------------" +
+                "\nEvento" +
+                "\nId = " + id +
                 "\nNome = " + nome +
                 "\nLocal = " + local  +
                 "\nData = " + data +
-                "\nDescricao =" + descricao ;
+                "\nDescricao =" + descricao +
+                "\n------------------"
+                ;
     }
 }
