@@ -10,6 +10,12 @@ public class Participante {
     public Participante() {
     }
 
+    public Participante(int id, String nome, String email) {
+        this.nome = nome;
+        this.email = email;
+        this.id = id;
+    }
+
     public Participante(String nome, String email) {
         this.nome = nome;
         this.email = email;

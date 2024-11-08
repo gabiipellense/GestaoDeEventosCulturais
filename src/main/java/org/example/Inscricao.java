@@ -6,8 +6,17 @@ public class Inscricao {
     private Evento evento ;
     private Participante participante ;
 
-    public Inscricao(Evento eventoId, Participante participanteId) {
+    public Inscricao(Evento evento, Participante participante, int id) {
+        this.evento = evento;
+        this.participante = participante;
+        this.id = id;
     }
+
+    public Inscricao(Evento evento, Participante participante) {
+        this.evento = evento;
+        this.participante = participante;
+    }
+
 
     public int getId() {
         return id;
@@ -36,7 +45,7 @@ public class Inscricao {
     @Override
     public String toString() {
         return "\n------------------"+
-                "\nInscricao" +
+                "\nINSCRIÇÃO" +
                 "\nId = " + id +
                 "\nEvento = " + evento +
                 "\nParticipante = " + participante +

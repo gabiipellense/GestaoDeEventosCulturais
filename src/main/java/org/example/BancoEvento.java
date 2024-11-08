@@ -99,4 +99,33 @@ public class BancoEvento {
         throw new RuntimeException("Nenhum registro de evento cadastrado ");
     }
 
+    public static Evento buscarEventoPorId(int id) {
+
+        try (Connection connection = ConexaoBanco.getConnections()) {
+
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM tb_eventos WHERE id = ? ");
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                int idProcura = rs.getInt("id");
+                String nomeProcurado = rs.getString("nome");
+                String local = rs.getString("localEvento");
+                String data = rs.getString("dataEvento");
+                String descricao = rs.getString("descricao");
+                return new Evento(idProcura, nomeProcurado, local, data, descricao);
+
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        throw new RuntimeException("O evento cultural " + id + " não foi encontrado.");
+
+    }
+
 }

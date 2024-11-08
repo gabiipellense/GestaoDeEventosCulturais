@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BancoParticipante {
 
@@ -43,9 +45,10 @@ public class BancoParticipante {
 
             if (rs.next()) {
 
+                int id = rs.getInt("id");
                 String nome = rs.getString("nome");
                 String emailProcurado = rs.getString("email");
-                return new Participante(nome, emailProcurado);
+                return new Participante(id, nome, emailProcurado);
 
             }
 
@@ -56,6 +59,31 @@ public class BancoParticipante {
 
         }
         throw new RuntimeException("O email " + email + " não existe em nosso Banco de Dados.");
+    }
+
+    public static List<Participante> buscarTodosOsParticipantes () {
+
+        try (Connection connection = ConexaoBanco.getConnections()){
+
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM tb_participantes");
+
+            ResultSet rs = ps.executeQuery();
+            List <Participante> participantes = new ArrayList<>();
+
+            while (rs.next()) {
+
+                participantes.add(new Participante(
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("email")
+                        ));
+            }
+            return participantes;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException("Nenhum registro de participantes cadastrado ");
     }
 
     public static void removerParticipante(int id) {
@@ -73,6 +101,34 @@ public class BancoParticipante {
 
         }
 
+    }
+
+    public static Participante buscarParticipantePorId(int id) {
+
+        try (Connection connection = ConexaoBanco.getConnections()) {
+
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM tb_participantes WHERE id = ?");
+
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                int idProcura = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String emailProcurado = rs.getString("email");
+                return new Participante(idProcura, nome, emailProcurado);
+
+            }
+
+        }
+        catch (Exception e ) {
+
+            e.printStackTrace();
+
+        }
+        throw new RuntimeException("O email " + id + " não existe em nosso Banco de Dados.");
     }
 }
 

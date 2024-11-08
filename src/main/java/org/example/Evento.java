@@ -79,7 +79,7 @@ public class Evento {
                 "\nNome = " + nome +
                 "\nLocal = " + local  +
                 "\nData = " + data +
-                "\nDescricao =" + descricao +
+                "\nDescricao = " + descricao +
                 "\n------------------"
                 ;
     }

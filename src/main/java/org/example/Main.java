@@ -20,7 +20,9 @@ public class Main {
 
             if (resposta1 == 1) {
 
-                entrar();
+                if ( entrar() == 0 ){
+                    resposta1 = 3;
+                }
 
 
             } else if (resposta1 == 2) {
@@ -43,10 +45,14 @@ public class Main {
             System.out.println("4 - Ver todos os Eventos ");
             System.out.println("5 - Cadastrar Participante ");
             System.out.println("6 - Remover Participante ");
-            System.out.println("7 - Buscar Participante por Email ");
+            System.out.println("7 - Buscar Participante por Email");
             System.out.println("8 - Fazer Inscrição ");
             System.out.println("9 - Remover Inscrição ");
-            System.out.println("0 - Sair ");
+            System.out.println("10 - Buscar Inscrição por Id ");
+            System.out.println("11 - Buscar todos os Participantes ");
+            System.out.println("12 - Buscar todas as Inscrições ");
+            System.out.println("0 - Sair");
+            System.out.println("----------------------------------");
 
 
             resposta = sc.nextInt();
@@ -107,6 +113,25 @@ public class Main {
 
                     break;
 
+                case 10 :
+
+                    buscarInscricaoPorId();
+
+                    break;
+
+                case 11:
+
+                    buscarTodosOsParticipantes();
+
+                    break;
+
+                case 12:
+
+                    buscarTodasAsInscricoes();
+
+                    break;
+
+
 
                 case 0 :
                     System.exit(0);
@@ -128,12 +153,21 @@ public class Main {
 
     }
 
-    public static void entrar () {
+    public static int entrar () {
 
         System.out.println("LOGIN");
 
         System.out.println("Digite o seu id de cadastro ");
         int id = sc.nextInt();
+
+        try {
+            BancoParticipante.buscarParticipantePorId( id );
+            return 1;
+        } catch ( RuntimeException e ) {
+            System.out.println("Não foi possível localizar o id " + id );
+            return 0;
+        }
+
 
     }
 
@@ -169,6 +203,8 @@ public class Main {
 
         System.out.println("Digite o nome do evento que você deseja buscar: ");
         String nomeEvento = sc.next();
+
+        System.out.println("EVENTO " + nomeEvento);
         System.out.println(BancoEvento.buscarEventoPorNome(nomeEvento));
 
     }
@@ -195,6 +231,8 @@ public class Main {
         System.out.println("Digite o email do participante que você deseja buscar: ");
         String email = sc.next();
 
+        System.out.println("PARTICIPANTE DE EMAIL: " + email );
+
         System.out.println(BancoParticipante.buscarParticipantePorEmail(email)) ;
 
     }
@@ -205,6 +243,15 @@ public class Main {
         int id = sc.nextInt();
         BancoParticipante.removerParticipante(id);
         System.out.println("Participante " + id + " Removido com Sucesso!");
+
+    }
+
+    public static List<Participante> buscarTodosOsParticipantes () {
+
+        System.out.println("------TODOS OS PARTICIPANTES------");
+        System.out.println(BancoParticipante.buscarTodosOsParticipantes());
+        return BancoParticipante.buscarTodosOsParticipantes();
+
 
     }
     public static Inscricao inscricao () {
@@ -222,8 +269,32 @@ public class Main {
 
         Participante participante = BancoParticipante.buscarParticipantePorEmail(email);
 
+        System.out.println("----------------------------");
+        System.out.println("Inscrição feita com Sucesso");
+        System.out.println("----------------------------");
+
 
         return BancoInscricao.inscreverParticipante(new Inscricao(evento, participante));
+
+    }
+
+    public static List<Inscricao> buscarTodasAsInscricoes () {
+
+        System.out.println("------------TODOS AS INSCRIÇÕES------------");
+        System.out.println(BancoInscricao.buscarTodasAsIncricoes());
+        return BancoInscricao.buscarTodasAsIncricoes();
+
+    }
+
+    public static void buscarInscricaoPorId () {
+
+        System.out.println("Digite o id da Inscrição que você deseja pesquisar: ");
+        int id = sc.nextInt();
+
+        System.out.println("INSCRIÇÃO " + id);
+
+        System.out.println(BancoInscricao.buscarInscricaoPorId(id));
+
 
     }
 
